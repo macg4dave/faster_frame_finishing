@@ -76,7 +76,7 @@ public class GameApiCompatibilityTests
     }
 
     [Fact]
-    public void Screwdriver_and_plastic_sheet_types_exist_and_are_items()
+    public void Screwdriver_welding_torch_and_plastic_sheet_types_exist_and_are_items()
     {
         GameInstall.SkipIfMissing();
         using var ctx = GameInstall.OpenContext();
@@ -85,6 +85,7 @@ public class GameApiCompatibilityTests
 
         Assert.True(T(game, "Assets.Scripts.Objects.Items.Screwdriver").IsSubclassOf(item));
         Assert.True(T(game, "Assets.Scripts.Objects.Items.PlasticSheet").IsSubclassOf(item));
+        Assert.True(T(game, "Assets.Scripts.Objects.Items.WeldingTorch").IsSubclassOf(item));
     }
 
     /// <summary>

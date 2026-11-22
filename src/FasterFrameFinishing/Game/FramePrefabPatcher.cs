@@ -10,7 +10,8 @@ using FasterFrameFinishing.Core;
 namespace FasterFrameFinishing.Game
 {
     /// <summary>
-    /// Applies the finishing-time change to registered structure prefabs.
+    /// Speeds up frame welding (iron/steel sheets) and plastic finishing on registered structure prefabs.
+    /// State 0 is never modified, so placement time (BuildPlacementTime) stays vanilla.
     ///
     /// Verified game data path (Assembly-CSharp, game 0.2.6429.27802):
     ///   Structure.AllStructurePrefabs : List&lt;Structure&gt;  (registered prefab copies)
@@ -35,7 +36,7 @@ namespace FasterFrameFinishing.Game
             _log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
-        /// <summary>Number of finishing stages currently modified.</summary>
+        /// <summary>Number of build stages currently modified.</summary>
         public int ModifiedCount => _originals.Count;
 
         /// <summary>
@@ -90,7 +91,8 @@ namespace FasterFrameFinishing.Game
             }
 
             int framesSeen = 0;
-            int modified = 0;
+            int framesModified = 0;
+            int stagesModified = 0;
             int skippedUnexpected = 0;
 
             foreach (Structure structure in prefabs)
@@ -101,7 +103,7 @@ namespace FasterFrameFinishing.Game
                 }
 
                 string prefabName = structure.PrefabName;
-                if (!FinishingStageMatcher.IsFrameFamily(prefabName))
+                if (!FrameStageMatcher.IsFrameFamily(prefabName))
                 {
                     continue;
                 }
@@ -109,7 +111,7 @@ namespace FasterFrameFinishing.Game
                 framesSeen++;
                 List<BuildState> states = structure.BuildStates;
                 List<BuildStateDescriptor> descriptors = Describe(states);
-                FinishingStageMatch match = FinishingStageMatcher.Evaluate(prefabName, descriptors);
+                FrameStageMatch match = FrameStageMatcher.Evaluate(prefabName, descriptors);
 
                 if (_settings.DebugLogging)
                 {
@@ -124,38 +126,44 @@ namespace FasterFrameFinishing.Game
 
                 switch (match.Kind)
                 {
-                    case FinishingStageMatchKind.Matched:
-                        ApplyToState(prefabName, states[match.StateIndex].Tool, descriptors[match.StateIndex], match);
-                        modified++;
+                    case FrameMatchKind.Matched:
+                        foreach (MatchedStage stage in match.Stages)
+                        {
+                            ApplyToState(prefabName, states[stage.Index].Tool, descriptors[stage.Index], stage);
+                            stagesModified++;
+                        }
+
+                        framesModified++;
                         break;
-                    case FinishingStageMatchKind.UnexpectedLayout:
+                    case FrameMatchKind.UnexpectedLayout:
                         skippedUnexpected++;
                         _log.LogWarning($"Skipping {prefabName}: {match.Reason}. Left at vanilla timing.");
                         break;
                 }
             }
 
-            if (modified == 0)
+            if (stagesModified == 0)
             {
                 _log.LogWarning(
-                    $"No steel-frame plastic-sheet finishing stage was found ({framesSeen} StructureFrame* prefab(s) inspected, " +
+                    $"No frame welding or finishing stage was found ({framesSeen} StructureFrame* prefab(s) inspected, " +
                     $"{skippedUnexpected} with an unexpected layout). The mod is inactive; the game may have changed.");
             }
             else
             {
-                _log.LogInfo($"Frame finishing modified on {modified} prefab(s); {framesSeen - modified} other frame variant(s) left unchanged.");
+                _log.LogInfo($"Modified {stagesModified} build stage(s) on {framesModified} frame prefab(s); " +
+                             $"{framesSeen - framesModified} other frame variant(s) left unchanged. Placement and deconstruction are unchanged.");
             }
         }
 
-        private void ApplyToState(string prefabName, ToolUse tool, BuildStateDescriptor descriptor, FinishingStageMatch match)
+        private void ApplyToState(string prefabName, ToolUse tool, BuildStateDescriptor descriptor, MatchedStage stage)
         {
             float target = FinishingApplier.NextValue(_originals, tool, tool.EntryTime, _settings, out float vanilla);
             tool.EntryTime = target;
 
             string mode = _settings.InstantFinish ? "instant" : $"x{_settings.SpeedMultiplier.ToString("0.###", CultureInfo.InvariantCulture)}";
             _log.LogInfo(
-                $"{prefabName} build state {descriptor.Index} ({descriptor.ToolEntryName} + {descriptor.EntryQuantity2}x {descriptor.ToolEntry2Name}): " +
-                $"EntryTime {vanilla.ToString("0.###", CultureInfo.InvariantCulture)}s -> {target.ToString("0.###", CultureInfo.InvariantCulture)}s ({mode}; {match.Reason}).");
+                $"{prefabName} build state {descriptor.Index} [{stage.Kind}] ({descriptor.ToolEntryName} + {descriptor.EntryQuantity2}x {descriptor.ToolEntry2Name}): " +
+                $"EntryTime {vanilla.ToString("0.###", CultureInfo.InvariantCulture)}s -> {target.ToString("0.###", CultureInfo.InvariantCulture)}s ({mode}).");
         }
 
         private static List<BuildStateDescriptor> Describe(List<BuildState> states)
@@ -171,7 +179,7 @@ namespace FasterFrameFinishing.Game
                 ToolUse tool = states[i]?.Tool;
                 if (tool == null)
                 {
-                    result.Add(new BuildStateDescriptor(i, null, false, null, false, 0, 0f));
+                    result.Add(new BuildStateDescriptor(i, null, false, false, null, false, 0, 0f));
                     continue;
                 }
 
@@ -181,6 +189,7 @@ namespace FasterFrameFinishing.Game
                     i,
                     entry != null ? entry.PrefabName : null,
                     entry is Screwdriver,
+                    entry is WeldingTorch,
                     entry2 != null ? entry2.PrefabName : null,
                     entry2 is PlasticSheet,
                     tool.EntryQuantity2,

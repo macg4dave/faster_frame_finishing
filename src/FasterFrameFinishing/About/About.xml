@@ -3,108 +3,81 @@
   <Name>Faster Frame Finishing</Name>
   <ModID>stationeers.fasterframefinishing</ModID>
   <Author>Faster Frame Finishing contributors</Author>
-  <Version>1.1.0</Version>
+  <Version>1.2.0</Version>
   <ModSide>Client</ModSide>
-  <ChangeLog>1.1.0 - Speed is now picked from a drop-down list (2x, 3x, 4x, 5x, 10x). Added the Steam thumbnail (thumb.png), and the mod picture is no longer stretched in the in-game Workshop menu. The in-game mod description now displays properly. Tidier settings panel.</ChangeLog>
+  <ChangeLog>1.2.0 - Welding iron and steel sheets onto frames is now faster too, at the same speed setting as the plastic finishing step. Placing frames and taking them apart are unchanged. "Instant Finish" is now "Instant Mode" and covers welding as well.</ChangeLog>
   <Tags>
     <Tag>Construction</Tag>
     <Tag>Quality of Life</Tag>
   </Tags>
-  <Description><![CDATA[[h1]🔧 Faster Frame Finishing[/h1]
-Tired of holding the screwdriver on every single steel frame? This mod makes the [b]last step of building a steel frame[/b] (the plastic sheet + screwdriver finish) [b]5× faster[/b].
-
-[b]2.0 seconds → 0.4 seconds[/b] per frame. Nothing else changes.
-
-[h2]✨ Features[/h2]
-[list]
-[*]⚡ [b]5× faster[/b] plastic-sheet finishing on steel frames, out of the box
-[*]🎚️ [b]Choose your speed[/b] from a simple list: 2x, 3x, 4x, 5x or 10x
-[*]💨 [b]Optional instant mode[/b] for the truly impatient
-[*]🧱 [b]Everything else stays vanilla:[/b] placing frames, welding steel sheets, taking frames apart, other structures
-[*]📦 [b]Same materials:[/b] still uses 1 plastic sheet per frame, and you still need your screwdriver
-[*]💾 [b]Save-safe:[/b] add or remove it at any time, and your saves are not affected
-[*]👥 [b]Multiplayer friendly:[/b] works even if the server or other players don't have it
-[/list]
-
-[h2]📋 Requirements[/h2]
-This mod needs two free tools. You only install them [b]once[/b], and many other mods use them too:
-[list]
-[*][b]BepInEx 5[/b]
-[*][url=https://github.com/StationeersLaunchPad/StationeersLaunchPad]StationeersLaunchPad[/url]
-[/list]
-Already using other Stationeers mods? You probably have both already. Skip to step 3!
-
-[h2]🚀 How to install[/h2]
-[olist]
-[*][b]Install BepInEx and StationeersLaunchPad[/b] (one time only). Follow the short, step-by-step guide on the [url=https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation]StationeersLaunchPad page[/url].
-[*][b]Start Stationeers once[/b] to check it works. You'll see a [b]LaunchPad[/b] box at the bottom of the loading screen.
-[*][b]Click Subscribe[/b] at the top of this page.
-[*][b]Start Stationeers.[/b] LaunchPad loads the mod automatically.
-[*]That's it! 🎉 Finish a steel frame with a screwdriver and plastic sheets, and enjoy the extra free time.
-[/olist]
-
-💡 [i]If the mod doesn't seem to load, click the LaunchPad box on the loading screen and check that [b]Faster Frame Finishing[/b] is ticked.[/i]
-
-[h2]⚙️ Settings[/h2]
-To change settings, go to the [b]main menu → Workshop[/b], click [b]Faster Frame Finishing[/b], and use the [b]Mod Configuration[/b] panel on the right. You can also change them in the LaunchPad window while the game is loading.
+  <Description><![CDATA[[h1]Faster Frame Finishing[/h1]
+Speeds up welding sheets onto iron and steel frames, and the plastic-sheet finish on steel frames. The default is 5x faster.
 
 [table]
-[tr][th]Setting[/th][th]Default[/th][th]What it does[/th][/tr]
-[tr][td]Enabled[/td][td]On[/td][td]Turn the mod on or off. Off = normal game speed.[/td][/tr]
-[tr][td]Speed Multiplier[/td][td]5x[/td][td]How much faster finishing is. Pick 2x, 3x, 4x, 5x or 10x from the drop-down list.[/td][/tr]
-[tr][td]InstantFinish[/td][td]Off[/td][td]Finish frames almost instantly, whatever the speed setting.[/td][/tr]
-[tr][td]DebugLogging[/td][td]Off[/td][td]Extra details in the log file. Only needed when reporting a problem.[/td][/tr]
+[tr][th]Step[/th][th]Normal[/th][th]With the mod (5x)[/th][/tr]
+[tr][td]Weld iron or steel sheet (two per frame)[/td][td]1.0 s each[/td][td]0.2 s each[/td][/tr]
+[tr][td]Plastic finish (steel frames)[/td][td]2.0 s[/td][td]0.4 s[/td][/tr]
 [/table]
 
-🔄 [b]Restart the game after changing a setting[/b] for it to take effect.
-
-[h2]👥 Multiplayer[/h2]
+[h2]Features[/h2]
 [list]
-[*]Everyone who wants faster finishing installs the mod on [b]their own game[/b].
-[*]The [b]server does not need it[/b], and players without it can still join and play normally (they keep the normal speed).
-[*]Plastic sheets are still used and frames still seal exactly as normal for everyone.
+[*]Works on iron and steel frames
+[*]Speed options: 2x, 3x, 4x, 5x or 10x
+[*]Optional instant mode
+[*]Uses the same tools and materials as normal
+[*]Placing frames, taking frames apart and all other structures are unchanged
+[*]Nothing is stored in your save, so the mod can be added or removed at any time
+[*]Client-side: the server and other players do not need it
 [/list]
 
-[h2]❓ FAQ[/h2]
-[b]Does it change any other building steps?[/b]
-No. Only the final plastic-sheet + screwdriver step on steel frames gets faster. Placing frames, welding steel sheets, deconstructing and every other structure work exactly as normal.
+[h2]Requirements[/h2]
+[list]
+[*]BepInEx 5
+[*][url=https://github.com/StationeersLaunchPad/StationeersLaunchPad]StationeersLaunchPad[/url]
+[/list]
 
-[b]Does it work on iron frames?[/b]
-Iron frames don't have a plastic finishing step, so there's nothing to speed up. They're left untouched.
+[h2]How to install[/h2]
+[olist]
+[*]Install BepInEx and StationeersLaunchPad by following the [url=https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation]StationeersLaunchPad installation guide[/url]. You only need to do this once.
+[*]Click [b]Subscribe[/b] on this page.
+[*]Start Stationeers. LaunchPad loads the mod automatically.
+[/olist]
+If the mod does not load, click the LaunchPad box on the loading screen and check that [b]Faster Frame Finishing[/b] is ticked.
 
-[b]Will it break my save?[/b]
-No. The mod doesn't store anything in your save. You can remove it at any time.
+[h2]Settings[/h2]
+Settings are in [b]main menu > Workshop > Faster Frame Finishing > Mod Configuration[/b], or in the LaunchPad window while the game is loading. Restart the game after changing a setting.
 
-[b]How do I go back to normal speed?[/b]
-Untick [b]Enabled[/b] in the mod settings and restart the game, or just unsubscribe.
+[table]
+[tr][th]Setting[/th][th]Default[/th][th]Description[/th][/tr]
+[tr][td]Enabled[/td][td]On[/td][td]Turns the mod on or off. Off means normal speed.[/td][/tr]
+[tr][td]Speed Multiplier[/td][td]5x[/td][td]How much faster welding and finishing are: 2x, 3x, 4x, 5x or 10x.[/td][/tr]
+[tr][td]Instant Mode[/td][td]Off[/td][td]Makes welding and finishing almost instant, whatever the speed setting.[/td][/tr]
+[tr][td]Debug Logging[/td][td]Off[/td][td]Writes extra details to the log file, for bug reports.[/td][/tr]
+[/table]
 
-[b]A game update came out. Is the mod still working?[/b]
-If an update changes how frames are built, the mod safely switches itself off and the game behaves normally until the mod is updated. It won't crash your game.
+[h2]Multiplayer[/h2]
+Each player who wants faster frame building installs the mod. The server does not need it, and players without it keep the normal speed. Materials are used and frames seal exactly as normal for everyone.
 
-[h2]🗑️ Uninstalling[/h2]
-Just click [b]Unsubscribe[/b]. Your saves are fine without it.
+[h2]Game updates[/h2]
+If an update changes how frames are built, the mod leaves frames at normal speed until it is updated.
 
-[h2]💬 Feedback & source code[/h2]
-Found a bug or have an idea? Leave a comment below, or visit the project on GitHub:
-👉 [url=https://github.com/macg4dave/faster_frame_finishing]Faster Frame Finishing on GitHub[/url]
+[h2]Uninstalling[/h2]
+Click [b]Unsubscribe[/b]. Saves are not affected.
 
-[i]Thanks for playing, and happy building! 🛠️[/i]]]></Description>
+[h2]Source code and bug reports[/h2]
+[url=https://github.com/macg4dave/faster_frame_finishing]Faster Frame Finishing on GitHub[/url]]]></Description>
   <InGameDescription><![CDATA[<size=133%><color=#ff8c1a><b>Faster Frame Finishing</b></color></size>
-Makes the <b>last step of building a steel frame</b> (plastic sheet + screwdriver) <b>5x faster</b>: 2.0 s becomes 0.4 s.
+Speeds up welding sheets onto iron and steel frames, and the plastic finish on steel frames. The default is 5x faster.
+ - Welding: 1.0 s becomes 0.2 s per sheet
+ - Plastic finish: 2.0 s becomes 0.4 s
 
-<b>Features</b>
- - Adjustable speed, or instant mode
- - Still uses 1 plastic sheet and your screwdriver
- - All other building steps stay normal
- - Safe to add or remove; saves are not affected
- - Server does not need it
+Placing frames, taking frames apart and all other structures are unchanged. The server does not need this mod.
 
 <b>Settings</b>
-Main menu > Workshop > select this mod > <b>Mod Configuration</b> panel.
+Main menu > Workshop > select this mod > <b>Mod Configuration</b> panel. Restart the game after changing a setting.
  - <b>Speed Multiplier</b>: 2x, 3x, 4x, 5x (default) or 10x
- - <b>InstantFinish</b>: finish almost instantly
- - <b>Enabled</b>: turn the mod off without uninstalling
-<i>Restart the game after changing a setting.</i>
+ - <b>Instant Mode</b>: welding and finishing are almost instant
+ - <b>Enabled</b>: turns the mod off without uninstalling
 
 Requires StationeersLaunchPad.]]></InGameDescription>
 </ModMetadata>

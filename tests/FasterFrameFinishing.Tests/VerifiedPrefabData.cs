@@ -11,7 +11,14 @@ namespace FasterFrameFinishing.Tests;
 internal static class VerifiedPrefabData
 {
     public static BuildStateDescriptor S(int i, string entry, string entry2, int qty2, float time) =>
-        new(i, entry, entry == "ItemScrewdriver", entry2, entry2 == "ItemPlasticSheets", qty2, time);
+        new(i, entry, entry == "ItemScrewdriver", entry == "ItemWeldingTorch", entry2, entry2 == "ItemPlasticSheets", qty2, time);
+
+    /// <summary>A non-frame structure that also uses welder + steel sheets (one of 138 such prefabs).</summary>
+    public static readonly IReadOnlyList<BuildStateDescriptor> StructureAirlockLike = new[]
+    {
+        S(0, "ItemKitAirlock", null, 0, 0.5f),
+        S(1, "ItemWeldingTorch", "ItemSteelSheets", 2, 1.0f),
+    };
 
     /// <summary>Steel frame: 4 states; state 3 is the plastic-sheet finishing stage.</summary>
     public static readonly IReadOnlyList<BuildStateDescriptor> StructureFrame = new[]

@@ -123,7 +123,7 @@ public sealed class ConfigBindingTests : IDisposable
         Assert.True(config.SpeedMultiplier.SettingType.IsEnum); // LaunchPad draws enums as a combo box
         AssertHints(config.Enabled, 0, "Enabled");
         AssertHints(config.SpeedMultiplier, 1, "Speed Multiplier");
-        AssertHints(config.InstantFinish, 2, "Instant Finish");
+        AssertHints(config.InstantFinish, 2, "Instant Mode");
         AssertHints(config.DebugLogging, 3, "Debug Logging");
     }
 

@@ -2,9 +2,14 @@
 
 ## Purpose and scope
 
-This mod changes **one value**: the `EntryTime` of the plastic-sheet + screwdriver finishing build state on steel-frame prefabs. Treat the narrow scope as a hard requirement:
+This mod changes **only `EntryTime`**, and only on these frame build states (`StructureFrame*` prefabs):
 
-- Do not change other build states, other structures, tool speeds, material quantities (`EntryQuantity*`), deconstruction (`ToolExit`, `ExitTime`), `BlockAir`, `BlockGravity`, or anything to do with the atmosphere.
+- **Welding:** welding torch + iron or steel sheets. These are `StructureFrame` states 1–2 and `StructureFrameIron` states 1–2.
+- **Finishing:** screwdriver + plastic sheets. This is `StructureFrame` state 3, the final state.
+
+Treat this narrow scope as a hard requirement:
+
+- Never change state 0 (placement, which also drives `BuildPlacementTime`). Do not change other structures, tool speeds, material quantities (`EntryQuantity*`), deconstruction (`ToolExit`, `ExitTime`), `BlockAir`, `BlockGravity`, or anything to do with the atmosphere.
 - Do not add Harmony patches, transpilers or new dependencies unless editing prefab data has become impossible. If that happens, record why in this file first.
 
 ## Architecture
@@ -50,13 +55,15 @@ All of these come from the decompiled installed `Assembly-CSharp.dll` (ILSpy) an
 
 **Prefab data** (from `resources.assets`; 736 `Structure*` prefabs have `BuildStates`):
 
-| Prefab | States | Finishing stage |
+| Prefab | States | Modified by this mod |
 |---|---|---|
-| `StructureFrame` | 4: frames 0.5 s; torch + steel sheet 1.0 s; torch + steel sheet 1.0 s; **screwdriver + 1 plastic sheet 2.0 s** (exit: crowbar 3.0 s) | **index 3** |
-| `StructureFrameIron` | 3 (same as the old steel layout, with iron sheets) | none |
-| `StructureFrameSide`, `StructureFrameCorner`, `StructureFrameCornerCut` | 1 | none |
+| `StructureFrame` | 4: frames 0.5 s; torch + steel sheet 1.0 s; torch + steel sheet 1.0 s; screwdriver + 1 plastic sheet 2.0 s (exit: crowbar 3.0 s) | **1, 2** (welding), **3** (finishing) |
+| `StructureFrameIron` | 3: frames 0.5 s; torch + iron sheet 1.0 s; torch + iron sheet 1.0 s | **1, 2** (welding) |
+| `StructureFrameSide`, `StructureFrameCorner`, `StructureFrameCornerCut` | 1 (placement only) | none |
 
-Exactly one state in the whole game uses `ItemScrewdriver` together with `ItemPlasticSheets`. Plastic sheets also appear with a welding torch (20 states), a crowbar (2) or no tool (30). The matcher therefore requires **both** tool types, a `StructureFrame` name prefix (which excludes `StructurePictureFrame*` and `StructureSuitStorageFrame`), and that the state is the **final** one. It does not hard-code index 3; index 3 is only checked to add a note to the log.
+**Welding:** a welding torch with `ItemSteelSheets` or `ItemIronSheets` is used by **140 prefabs**; only 2 of them are frames. Restricting matching to the `StructureFrame` prefix is therefore essential. There is no iron-sheet class (only `SteelSheet`), so sheets are matched by those two verified prefab names. The welder is matched by type (`WeldingTorch`). A welding stage must come after placement (index ≥ 1) and before the finishing stage; otherwise the whole prefab is skipped.
+
+**Finishing:** exactly one state in the whole game uses `ItemScrewdriver` together with `ItemPlasticSheets`. Plastic sheets also appear with a welding torch (20 states), a crowbar (2) or no tool (30). The matcher therefore requires **both** tool types, a `StructureFrame` name prefix (which excludes `StructurePictureFrame*` and `StructureSuitStorageFrame`), and that the state is the **final** one. It does not hard-code index 3; index 3 is only checked to add a note to the log.
 
 ## StationeersLaunchPad integration (verified in installed SLP 1.2.1 and GitHub `main`)
 

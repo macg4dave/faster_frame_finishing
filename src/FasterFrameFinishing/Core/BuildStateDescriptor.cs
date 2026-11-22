@@ -10,6 +10,7 @@ namespace FasterFrameFinishing.Core
             int index,
             string toolEntryName,
             bool toolEntryIsScrewdriver,
+            bool toolEntryIsWeldingTorch,
             string toolEntry2Name,
             bool toolEntry2IsPlasticSheet,
             int entryQuantity2,
@@ -18,6 +19,7 @@ namespace FasterFrameFinishing.Core
             Index = index;
             ToolEntryName = toolEntryName;
             ToolEntryIsScrewdriver = toolEntryIsScrewdriver;
+            ToolEntryIsWeldingTorch = toolEntryIsWeldingTorch;
             ToolEntry2Name = toolEntry2Name;
             ToolEntry2IsPlasticSheet = toolEntry2IsPlasticSheet;
             EntryQuantity2 = entryQuantity2;
@@ -30,6 +32,9 @@ namespace FasterFrameFinishing.Core
         public string ToolEntryName { get; }
 
         public bool ToolEntryIsScrewdriver { get; }
+
+        /// <summary><c>Tool.ToolEntry is Assets.Scripts.Objects.Items.WeldingTorch</c>.</summary>
+        public bool ToolEntryIsWeldingTorch { get; }
 
         /// <summary>Prefab name of <c>Tool.ToolEntry2</c> (off-hand material), or null.</summary>
         public string ToolEntry2Name { get; }

@@ -29,18 +29,19 @@ Set up a creative or test world that has steel frames, steel sheets, plastic she
 
 | # | Check | Expected | Result |
 |---|---|---|---|
-| 1 | Install into `Documents/My Games/Stationeers/mods`, start the game, and confirm the mod is listed and ticked in the LaunchPad window. Search `BepInEx/LogOutput.log` for `Faster Frame Finishing`. | It logs `loaded via StationeersLaunchPad`, then `StructureFrame build state 3 (ItemScrewdriver + 1x ItemPlasticSheets): EntryTime 2s -> 0.4s` and `4 other frame variant(s) left unchanged`. No errors. | not run |
-| 2 | Place a steel frame, then weld 2 steel sheets. | Each stage takes the vanilla time: 0.5 s, then 1.0 s, then 1.0 s. | not run |
+| 1 | Install into `Documents/My Games/Stationeers/mods`, start the game, and confirm the mod is listed and ticked in the LaunchPad window. Search `BepInEx/LogOutput.log` for `Faster Frame Finishing`. | It logs `loaded via StationeersLaunchPad`. At the default 5x it then logs `StructureFrame build state 1 [Welding]` and `2 [Welding]` at `1s -> 0.2s`, `3 [Finishing]` at `2s -> 0.4s`, `StructureFrameIron build state 1 [Welding]` and `2 [Welding]` at `1s -> 0.2s`, and finally `Modified 5 build stage(s) on 2 frame prefab(s); 3 other frame variant(s) left unchanged`. No errors. | not run |
+| 2 | Place a steel frame, then weld 2 steel sheets. | Placing takes the vanilla 0.5 s. Each weld takes about 0.2 s instead of 1.0 s. One steel sheet is used per weld. | not run |
 | 3 | Hold a screwdriver with plastic sheets in the off hand and finish the frame. | About 0.4 s (in a suit, normal mood). Screwdriver sound and progress bar as in vanilla. | not run |
 | 4 | Count plastic sheets before and after step 3. | Exactly one consumed. | not run |
 | 5 | Deconstruct the finished frame with a crowbar. | Vanilla 3.0 s. The plastic sheet is returned as in vanilla. | not run |
-| 6 | Build an iron frame. | Vanilla behaviour, with 3 stages. | not run |
-| 7 | Set `InstantFinish = true` and restart. Repeat step 3. | Completes almost immediately. One sheet consumed. | not run |
+| 6 | Build an iron frame, welding 2 iron sheets. | Placing takes the vanilla 0.5 s. Each weld takes about 0.2 s. There is no plastic step. Deconstruction uses vanilla timing. | not run |
+| 6a | Build something else with a welder and steel sheets, such as a wall or an airlock. | Vanilla timing (not faster). | not run |
+| 7 | Turn on **Instant Mode** and restart. Repeat steps 2 and 3. | Welding and finishing complete almost immediately. Sheets are consumed as normal. | not run |
 | 8 | Set `Enabled = false` and restart. Repeat step 3. | Vanilla 2.0 s. Log says `Disabled in config`. | not run |
 | 9 | Pick each option (2x, 3x, 4x, 5x, 10x) in the **Speed Multiplier** drop-down and restart each time. | The log shows `2s -> 1s`, `0.667s`, `0.5s`, `0.4s` and `0.2s` respectively. | not run |
 | 10a | Open main menu → Workshop → Faster Frame Finishing. | No `thumb.png` alert appears. The tidy in-game description is shown, not raw `[h1]` tags. The picture is not stretched. **Speed Multiplier** is a drop-down offering 2x, 3x, 4x, 5x and 10x. | not run |
 | 10 | Set `SpeedMultiplier = 7` or `abc` in the cfg file and restart. | The mod falls back to 5x (with a warning for `7`), and the file is rewritten to `x5`. The game does not crash. | not run |
-| 11 | Set `DebugLogging = true` and restart. | All 5 `StructureFrame*` prefabs and their states are listed. | not run |
+| 11 | Set `DebugLogging = true` and restart. | All 5 `StructureFrame*` prefabs and their states are listed, with the matched welding and finishing stages. | not run |
 | 12 | Multiplayer: host without the mod, client with it. | The client finishes in about 0.4 s and the server accepts it. The sheet is consumed on the server. | not run |
 | 13 | Multiplayer: client without the mod. | Vanilla 2.0 s for that client. | not run |
 | 14 | Load a save that has finished frames, then uninstall the mod and load it again. | The save loads normally both times. | not run |

@@ -9,7 +9,7 @@
     <LangVersion>9.0</LangVersion>
     <AssemblyName>FasterFrameFinishing</AssemblyName>
     <RootNamespace>FasterFrameFinishing</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
 

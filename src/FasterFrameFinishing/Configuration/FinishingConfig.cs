@@ -25,18 +25,19 @@ namespace FasterFrameFinishing.Configuration
                 null, Hints(0, "Enabled")));
 
             SpeedMultiplier = file.Bind(Section, "SpeedMultiplier", DefaultSpeed, new ConfigDescription(
-                "How many times faster the plastic-sheet + screwdriver finishing step of steel frames is: " +
-                "2x, 3x, 4x, 5x or 10x. 5x (default) turns 2.0 s into 0.4 s. " +
-                "For normal speed, turn Enabled off." + RestartNote,
+                "How many times faster welding sheets onto iron and steel frames, and the plastic-sheet finishing " +
+                "step on steel frames, are: 2x, 3x, 4x, 5x or 10x. At 5x (default), each welding step takes 0.2 s " +
+                "instead of 1.0 s, and finishing takes 0.4 s instead of 2.0 s. Placing frames and taking them apart " +
+                "are unchanged. For normal speed, turn Enabled off." + RestartNote,
                 null, Hints(1, "Speed Multiplier")));
 
             InstantFinish = file.Bind(Section, "InstantFinish", false, new ConfigDescription(
-                "Finish frames almost instantly, whatever the Speed Multiplier. " +
-                "You still use the screwdriver and plastic sheet as normal." + RestartNote,
-                null, Hints(2, "Instant Finish")));
+                "Make welding and finishing frames almost instant, whatever the Speed Multiplier. " +
+                "You still use the welder, sheets, screwdriver and plastic as normal." + RestartNote,
+                null, Hints(2, "Instant Mode")));
 
             DebugLogging = file.Bind(Section, "DebugLogging", false, new ConfigDescription(
-                "Log every steel-frame prefab's build states and matching decisions to the BepInEx log." + RestartNote,
+                "Log every frame prefab's build states and matching decisions to the BepInEx log." + RestartNote,
                 null, Hints(3, "Debug Logging")));
 
             NormalizeSpeedMultiplier();
