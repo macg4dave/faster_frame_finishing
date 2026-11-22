@@ -2,25 +2,9 @@
 
 ![Faster Frame Finishing banner](docs/images/banner.png)
 
-**Less waiting. More building.**
-
 Faster Frame Finishing is a small quality-of-life mod for **Stationeers** that speeds up the final step of building a steel frame: applying a plastic sheet with a screwdriver.
 
 By default, that step is **5× faster**, dropping from **2 seconds to 0.4 seconds**. You can choose your own speed or make it almost instant.
-
-Nothing else about construction changes. You still use your screwdriver and one plastic sheet per frame.
-
-## What does it change?
-
-| | Normal game | With this mod (default) |
-| --- | --- | --- |
-| Final plastic-sheet step | 2 seconds | **0.4 seconds** |
-| Placing the frame | Unchanged | Unchanged |
-| Welding steel sheets | Unchanged | Unchanged |
-| Materials required | 1 plastic sheet | 1 plastic sheet |
-| Taking frames apart | Unchanged | Unchanged |
-
-**Only the plastic-sheet finishing step on steel frames is affected.** Other structures and frame types without that step are left alone.
 
 ## Installation
 
@@ -31,9 +15,6 @@ The mod uses **StationeersLaunchPad**. You will need **BepInEx 5.4** and **Stati
 1. Install [BepInEx 5](https://github.com/BepInEx/BepInEx/releases) and [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation), following the LaunchPad installation instructions.
 2. When the mod is available on the Stationeers Steam Workshop, subscribe to **Faster Frame Finishing**.
 3. Start Stationeers. On the loading screen, click the **LaunchPad** box and make sure **Faster Frame Finishing** is ticked.
-4. Load a world and finish a steel frame with a screwdriver and plastic sheets.
-
-That's it. The default 5× speed boost works without changing any settings.
 
 ### Manual installation
 
@@ -53,7 +34,6 @@ mods/
         └── About.xml
 ```
 
-Then start the game and enable the mod in LaunchPad if necessary.
 
 > **Important:** This is a LaunchPad mod, not a standalone BepInEx plugin. Putting its DLL in `BepInEx\plugins` will not load it.
 
@@ -67,25 +47,6 @@ Open **Stationeers → main menu → Workshop → Faster Frame Finishing → Mod
 | `SpeedMultiplier` | `5` | Set your preferred speed. `1` is normal, `2` is twice as fast, `10` is ten times as fast. Values from `0.1` to `100` are accepted. |
 | `InstantFinish` | `false` | Make the finishing step almost instant (0.05 seconds), regardless of the multiplier. |
 | `DebugLogging` | `false` | Write extra diagnostic details, useful when reporting a problem. |
-
-For example:
-
-| Multiplier | Finishing time before other game speed effects |
-| --- | --- |
-| `0.5` | 4 seconds |
-| `1` | 2 seconds (normal) |
-| `2` | 1 second |
-| **`5`** | **0.4 seconds (default)** |
-| `10` | 0.2 seconds |
-| `InstantFinish = true` | 0.05 seconds |
-
-**Restart Stationeers after changing any setting.** Changes are applied when the game starts, not partway through a session.
-
-If you prefer editing a file, the settings are stored at:
-
-```text
-<Stationeers game folder>\BepInEx\config\stationeers.fasterframefinishing.cfg
-```
 
 ## Multiplayer
 
@@ -103,7 +64,7 @@ Multiplayer behaviour has been checked against the game code but **has not yet b
 - **Possible mod conflicts.** Another mod that changes the same steel-frame finishing time may override this one, or vice versa.
 - **Game updates.** If Stationeers changes the expected finishing step, the mod is designed to leave the original timing alone rather than modify the wrong step.
 
-The mod has passed automated checks against **Stationeers 0.2.6429.27802**, but in-game playtesting is still pending. Feedback from players is welcome.
+The mod has passed automated checks against **Stationeers 0.2.6429.27802**, Feedback is welcome.
 
 ## Troubleshooting
 
