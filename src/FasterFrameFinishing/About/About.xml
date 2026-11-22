@@ -3,9 +3,9 @@
   <Name>Faster Frame Finishing</Name>
   <ModID>stationeers.fasterframefinishing</ModID>
   <Author>Faster Frame Finishing contributors</Author>
-  <Version>1.0.0</Version>
+  <Version>1.1.0</Version>
   <ModSide>Client</ModSide>
-  <ChangeLog>1.0.0 - First release. The plastic-sheet finishing step on steel frames is 5x faster by default. Speed is adjustable, and there is an optional instant mode.</ChangeLog>
+  <ChangeLog>1.1.0 - Speed is now picked from a drop-down list (2x, 3x, 4x, 5x, 10x). Added the Steam thumbnail (thumb.png), and the mod picture is no longer stretched in the in-game Workshop menu. The in-game mod description now displays properly. Tidier settings panel.</ChangeLog>
   <Tags>
     <Tag>Construction</Tag>
     <Tag>Quality of Life</Tag>
@@ -18,7 +18,7 @@ Tired of holding the screwdriver on every single steel frame? This mod makes the
 [h2]✨ Features[/h2]
 [list]
 [*]⚡ [b]5× faster[/b] plastic-sheet finishing on steel frames, out of the box
-[*]🎚️ [b]Adjustable speed.[/b] Pick any speed you like, or go back to normal
+[*]🎚️ [b]Choose your speed[/b] from a simple list: 2x, 3x, 4x, 5x or 10x
 [*]💨 [b]Optional instant mode[/b] for the truly impatient
 [*]🧱 [b]Everything else stays vanilla:[/b] placing frames, welding steel sheets, taking frames apart, other structures
 [*]📦 [b]Same materials:[/b] still uses 1 plastic sheet per frame, and you still need your screwdriver
@@ -51,7 +51,7 @@ To change settings, go to the [b]main menu → Workshop[/b], click [b]Faster Fra
 [table]
 [tr][th]Setting[/th][th]Default[/th][th]What it does[/th][/tr]
 [tr][td]Enabled[/td][td]On[/td][td]Turn the mod on or off. Off = normal game speed.[/td][/tr]
-[tr][td]SpeedMultiplier[/td][td]5[/td][td]How much faster finishing is. 1 = normal, 2 = twice as fast, 10 = ten times as fast. Anything from 0.1 to 100.[/td][/tr]
+[tr][td]Speed Multiplier[/td][td]5x[/td][td]How much faster finishing is. Pick 2x, 3x, 4x, 5x or 10x from the drop-down list.[/td][/tr]
 [tr][td]InstantFinish[/td][td]Off[/td][td]Finish frames almost instantly, whatever the speed setting.[/td][/tr]
 [tr][td]DebugLogging[/td][td]Off[/td][td]Extra details in the log file. Only needed when reporting a problem.[/td][/tr]
 [/table]
@@ -75,8 +75,8 @@ Iron frames don't have a plastic finishing step, so there's nothing to speed up.
 [b]Will it break my save?[/b]
 No. The mod doesn't store anything in your save. You can remove it at any time.
 
-[b]Can I make it slower instead?[/b]
-Yes! Set SpeedMultiplier below 1 (for example 0.5 for half speed).
+[b]How do I go back to normal speed?[/b]
+Untick [b]Enabled[/b] in the mod settings and restart the game, or just unsubscribe.
 
 [b]A game update came out. Is the mod still working?[/b]
 If an update changes how frames are built, the mod safely switches itself off and the game behaves normally until the mod is updated. It won't crash your game.
@@ -101,7 +101,7 @@ Makes the <b>last step of building a steel frame</b> (plastic sheet + screwdrive
 
 <b>Settings</b>
 Main menu > Workshop > select this mod > <b>Mod Configuration</b> panel.
- - <b>SpeedMultiplier</b>: 1 = normal, 5 = default, up to 100
+ - <b>Speed Multiplier</b>: 2x, 3x, 4x, 5x (default) or 10x
  - <b>InstantFinish</b>: finish almost instantly
  - <b>Enabled</b>: turn the mod off without uninstalling
 <i>Restart the game after changing a setting.</i>

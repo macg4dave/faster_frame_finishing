@@ -37,9 +37,9 @@ Set up a creative or test world that has steel frames, steel sheets, plastic she
 | 6 | Build an iron frame. | Vanilla behaviour, with 3 stages. | not run |
 | 7 | Set `InstantFinish = true` and restart. Repeat step 3. | Completes almost immediately. One sheet consumed. | not run |
 | 8 | Set `Enabled = false` and restart. Repeat step 3. | Vanilla 2.0 s. Log says `Disabled in config`. | not run |
-| 9 | Set `SpeedMultiplier = 1` and restart. | Log shows `2s -> 2s`, and timing is vanilla. | not run |
-| 10a | Change `SpeedMultiplier` in the LaunchPad config window, then restart. | The new value is used. A restart warning is logged if you change it while the game is running. | not run |
-| 10 | Set `SpeedMultiplier = abc` or `1000` in the cfg file and restart. | BepInEx falls back to the default or clamps to 100. The game does not crash. | not run |
+| 9 | Pick each option (2x, 3x, 4x, 5x, 10x) in the **Speed Multiplier** drop-down and restart each time. | The log shows `2s -> 1s`, `0.667s`, `0.5s`, `0.4s` and `0.2s` respectively. | not run |
+| 10a | Open main menu → Workshop → Faster Frame Finishing. | No `thumb.png` alert appears. The tidy in-game description is shown, not raw `[h1]` tags. The picture is not stretched. **Speed Multiplier** is a drop-down offering 2x, 3x, 4x, 5x and 10x. | not run |
+| 10 | Set `SpeedMultiplier = 7` or `abc` in the cfg file and restart. | The mod falls back to 5x (with a warning for `7`), and the file is rewritten to `x5`. The game does not crash. | not run |
 | 11 | Set `DebugLogging = true` and restart. | All 5 `StructureFrame*` prefabs and their states are listed. | not run |
 | 12 | Multiplayer: host without the mod, client with it. | The client finishes in about 0.4 s and the server accepts it. The sheet is consumed on the server. | not run |
 | 13 | Multiplayer: client without the mod. | Vanilla 2.0 s for that client. | not run |

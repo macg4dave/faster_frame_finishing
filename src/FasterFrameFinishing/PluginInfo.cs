@@ -10,6 +10,6 @@ namespace FasterFrameFinishing
         public const string Name = "Faster Frame Finishing";
 
         /// <summary>Must equal &lt;Version&gt; in About/About.xml. Checked by tests.</summary>
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
     }
 }

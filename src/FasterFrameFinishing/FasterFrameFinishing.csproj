@@ -9,7 +9,7 @@
     <LangVersion>9.0</LangVersion>
     <AssemblyName>FasterFrameFinishing</AssemblyName>
     <RootNamespace>FasterFrameFinishing</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
 
@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <GameReference Include="mscorlib;netstandard;System;System.Core" SourceDir="$(StationeersManagedDirectory)" />
+    <GameReference Include="mscorlib;netstandard;System;System.Core;System.ComponentModel.DataAnnotations" SourceDir="$(StationeersManagedDirectory)" />
     <GameReference Include="Assembly-CSharp;UnityEngine;UnityEngine.CoreModule;UniTask" SourceDir="$(StationeersManagedDirectory)" />
     <GameReference Include="BepInEx" SourceDir="$(BepInExCoreDirectory)" />
 
@@ -73,24 +73,14 @@
   </Target>
 
   <!--
-    Opt-in: -p:DeployToGame=true copies the package into the game's local mods folder.
-    The game reads local mods from <SavePath>\mods (WorkshopUtils.GetLocalDirInfo), where SavePath
-    comes from Documents\My Games\Stationeers\setting.xml (the game's Settings > save Path).
+    Opt-in: -p:DeployToGame=true copies the package into the local mods folder,
+    Documents\My Games\Stationeers\mods (where the game and LaunchPad load local mods from).
     Override with -p:StationeersModsDirectory=... if needed.
   -->
   <Target Name="DeployModToGame" AfterTargets="StageModPackage" Condition="'$(DeployToGame)' == 'true'">
     <PropertyGroup>
-      <_StationeersDefaultSaveDir>$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\My Games\Stationeers</_StationeersDefaultSaveDir>
-      <_StationeersSettingFile>$(_StationeersDefaultSaveDir)\setting.xml</_StationeersSettingFile>
-    </PropertyGroup>
-    <XmlPeek Condition="'$(StationeersModsDirectory)' == '' And Exists('$(_StationeersSettingFile)')"
-             XmlInputPath="$(_StationeersSettingFile)" Query="/SettingData/SavePath/text()">
-      <Output TaskParameter="Result" PropertyName="_StationeersSavePath" />
-    </XmlPeek>
-    <PropertyGroup>
-      <_StationeersSavePath Condition="'$(_StationeersSavePath)' == ''">$(_StationeersDefaultSaveDir)</_StationeersSavePath>
       <_ModsDir Condition="'$(StationeersModsDirectory)' != ''">$(StationeersModsDirectory)</_ModsDir>
-      <_ModsDir Condition="'$(StationeersModsDirectory)' == ''">$(_StationeersSavePath)\mods</_ModsDir>
+      <_ModsDir Condition="'$(StationeersModsDirectory)' == ''">$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\My Games\Stationeers\mods</_ModsDir>
       <ModDeployDir>$([MSBuild]::EnsureTrailingSlash('$(_ModsDir)'))FasterFrameFinishing\</ModDeployDir>
     </PropertyGroup>
     <ItemGroup>

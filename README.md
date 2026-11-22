@@ -19,7 +19,7 @@ The mod uses **StationeersLaunchPad**. You will need **BepInEx 5.4** and **Stati
 ### Manual installation
 
 1. Install [BepInEx 5](https://github.com/BepInEx/BepInEx/releases) and [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation) as described above.
-2. Download **`FasterFrameFinishing-1.0.0.zip`** from the [Releases page](https://github.com/macg4dave/faster_frame_finishing/releases).
+2. Download **`FasterFrameFinishing-1.1.0.zip`** from the [Releases page](https://github.com/macg4dave/faster_frame_finishing/releases).
    Download the zip file, not the green **Code** button. That button gives you the source code, which the game can't use.
 3. Unzip it into your Stationeers `mods` folder (see below).
 4. Start Stationeers. On the loading screen, click the **LaunchPad** box and make sure **Faster Frame Finishing** is listed and ticked.
@@ -34,7 +34,7 @@ The default `mods` folder is:
 
 Paste that line into the address bar of File Explorer and press **Enter** to open it. Then open the zip file and drag the **`FasterFrameFinishing`** folder from inside it into the `mods` folder.
 
-> Avoid **Extract All…** with its default settings. Windows adds an extra folder named after the zip, which gives you `mods\FasterFrameFinishing-1.0.0\FasterFrameFinishing\`.
+> Avoid **Extract All…** with its default settings. Windows adds an extra folder named after the zip, which gives you `mods\FasterFrameFinishing-1.1.0\FasterFrameFinishing\`.
 
 #### Linux / Steam Deck (Proton)
 
@@ -47,7 +47,7 @@ Stationeers runs through Proton, so the `mods` folder is inside the game's Proto
 Unzip from a terminal:
 
 ```bash
-unzip FasterFrameFinishing-1.0.0.zip -d ~/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My\ Games/Stationeers/mods/
+unzip FasterFrameFinishing-1.1.0.zip -d ~/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My\ Games/Stationeers/mods/
 ```
 
 If Stationeers is installed in a different Steam library, replace `~/.local/share/Steam` with that library's folder.
@@ -75,7 +75,7 @@ Open **Stationeers → main menu → Workshop → Faster Frame Finishing → Mod
 | Setting | Default | What it does |
 | --- | --- | --- |
 | `Enabled` | `true` | Turn the mod on or off. Off restores normal finishing speed. |
-| `SpeedMultiplier` | `5` | Set your preferred speed. `1` is normal, `2` is twice as fast, `10` is ten times as fast. Values from `0.1` to `100` are accepted. |
+| `Speed Multiplier` | `5x` | Choose from the drop-down list: **2x**, **3x**, **4x**, **5x** or **10x**. For normal speed, turn `Enabled` off. |
 | `InstantFinish` | `false` | Make the finishing step almost instant (0.05 seconds), regardless of the multiplier. |
 | `DebugLogging` | `false` | Write extra diagnostic details, useful when reporting a problem. |
 
@@ -101,11 +101,11 @@ The mod has passed automated checks against **Stationeers 0.2.6429.27802**, Feed
 
 **The mod is not showing up**
 
-Check that BepInEx and StationeersLaunchPad are installed, and that the mod is enabled in the LaunchPad window. If you installed it manually, compare your `mods` folder with the layout under [Check the result](#check-the-result). The most common mistake is an extra folder level, such as `mods\FasterFrameFinishing-1.0.0\FasterFrameFinishing\`.
+Check that BepInEx and StationeersLaunchPad are installed, and that the mod is enabled in the LaunchPad window. If you installed it manually, compare your `mods` folder with the layout under [Check the result](#check-the-result). The most common mistake is an extra folder level, such as `mods\FasterFrameFinishing-1.1.0\FasterFrameFinishing\`.
 
 **The finishing speed has not changed**
 
-Check that `Enabled` is `true`, that `SpeedMultiplier` is greater than `1` (or `InstantFinish` is enabled), and restart the game. Also check for another mod that changes frame construction.
+Check that `Enabled` is `true`, then restart the game. Settings only take effect after a restart. Also check for another mod that changes frame construction.
 
 **I want to check whether the mod loaded**
 

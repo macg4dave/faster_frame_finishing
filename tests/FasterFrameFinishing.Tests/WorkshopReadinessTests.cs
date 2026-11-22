@@ -70,21 +70,48 @@ public class WorkshopReadinessTests
         Assert.DoesNotMatch(@"\[(list|olist|table|\*)\]", g); // BBCode the in-game TextMeshPro text would show raw
     }
 
-    [Fact]
-    public void Preview_image_is_a_square_png_under_one_megabyte()
+    private static (int Width, int Height, long Bytes) Png(string fileName)
     {
         About();
-        string preview = Path.Combine(Path.GetDirectoryName(AboutXml)!, "Preview.png");
-        Assert.True(File.Exists(preview), "About/Preview.png is missing (used as the Workshop preview image).");
-
-        byte[] bytes = File.ReadAllBytes(preview);
-        Assert.True(bytes.Length < 1024 * 1024, "Steam rejects preview images of 1 MB or more.");
+        string path = Path.Combine(Path.GetDirectoryName(AboutXml)!, fileName);
+        Assert.True(File.Exists(path), $"About/{fileName} is missing.");
+        byte[] bytes = File.ReadAllBytes(path);
         Assert.Equal(new byte[] { 0x89, 0x50, 0x4E, 0x47 }, bytes.Take(4).ToArray());
-
         int width = (bytes[16] << 24) | (bytes[17] << 16) | (bytes[18] << 8) | bytes[19];
         int height = (bytes[20] << 24) | (bytes[21] << 16) | (bytes[22] << 8) | bytes[23];
-        Assert.Equal(width, height);
-        Assert.InRange(width, 256, 1024);
+        return (width, height, bytes.Length);
+    }
+
+    /// <summary>
+    /// thumb.png is what WorkshopMenu.PublishMod uploads as the Steam preview. StationeersLaunchPad 1.2.1
+    /// (Steam.ValidateForWorkshop) requires it and rejects files over 1024 KiB; when that check fails it
+    /// also skips showing InGameDescription, so the raw BBCode appears in the Workshop panel.
+    /// </summary>
+    [Fact]
+    public void Thumb_png_exists_is_16_by_9_and_within_LaunchPad_size_limit()
+    {
+        var (w, h, size) = Png("thumb.png");
+        Assert.True(size <= 1024 * 1024, $"thumb.png is {size / 1024} KiB; LaunchPad and Steam reject more than 1024 KiB.");
+        Assert.InRange(w / (double)h, 1.70, 1.80);
+    }
+
+    /// <summary>Preview.png fills the in-game Workshop panel's 16:9 image box, which stretches to fit.</summary>
+    [Fact]
+    public void Preview_png_is_16_by_9_so_it_is_not_stretched_in_game()
+    {
+        var (w, h, _) = Png("Preview.png");
+        Assert.InRange(w / (double)h, 1.70, 1.80);
+        Assert.InRange(h, 360, 1080);
+    }
+
+    /// <summary>Mirrors the other StationeersLaunchPad 1.2.1 Steam.ValidateForWorkshop limits.</summary>
+    [Fact]
+    public void About_fields_are_within_LaunchPad_workshop_limits()
+    {
+        XElement about = About();
+        Assert.InRange(about.Element("Name")!.Value.Length, 1, 128);
+        Assert.InRange(about.Element("Description")!.Value.Length, 1, 8000);
+        Assert.InRange(about.Element("ChangeLog")?.Value.Length ?? 0, 0, 8000);
     }
 
     /// <summary>Shows up as a skipped test (a reminder), not a failure, until the real URL is filled in.</summary>

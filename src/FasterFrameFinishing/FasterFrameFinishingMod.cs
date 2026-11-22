@@ -52,9 +52,9 @@ namespace FasterFrameFinishing
             config.OnAnySettingChanged(entry =>
                 Log.LogWarning($"'{entry.Definition.Key}' changed to '{entry.BoxedValue}'. Restart the game for it to take effect."));
 
-            if (!settings.SpeedMultiplier.Equals(config.SpeedMultiplier.Value)) // also catches NaN
+            if (config.LastRejectedSpeedMultiplier.HasValue)
             {
-                Log.LogWarning($"SpeedMultiplier '{config.SpeedMultiplier.Value}' is invalid; using {settings.SpeedMultiplier}.");
+                Log.LogWarning($"SpeedMultiplier '{config.LastRejectedSpeedMultiplier.Value}' is not one of 2x, 3x, 4x, 5x, 10x; using {FinishingConfig.Describe(FinishingConfig.DefaultSpeed)}.");
             }
 
             Log.LogInfo($"{PluginInfo.Name} {PluginInfo.Version} loaded via StationeersLaunchPad. {settings}");
