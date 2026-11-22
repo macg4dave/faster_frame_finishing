@@ -37,25 +37,25 @@ That's it. The default 5× speed boost works without changing any settings.
 
 ### Manual installation
 
-If you have a packaged copy of the mod, put the entire \`FasterFrameFinishing\` folder into:
+If you have a packaged copy of the mod, put the entire `FasterFrameFinishing` folder into:
 
-\`\`\`text
+```text
 Documents\My Games\Stationeers\mods\
-\`\`\`
+```
 
 The resulting layout should look like this:
 
-\`\`\`text
+```text
 mods/
 └── FasterFrameFinishing/
     ├── FasterFrameFinishing.dll
     └── About/
         └── About.xml
-\`\`\`
+```
 
 Then start the game and enable the mod in LaunchPad if necessary.
 
-> **Important:** This is a LaunchPad mod, not a standalone BepInEx plugin. Putting its DLL in \`BepInEx\plugins\` will not load it.
+> **Important:** This is a LaunchPad mod, not a standalone BepInEx plugin. Putting its DLL in `BepInEx\plugins` will not load it.
 
 ## Change the speed
 
@@ -63,29 +63,29 @@ Open **Stationeers → main menu → Workshop → Faster Frame Finishing → Mod
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| \`Enabled\` | \`true\` | Turn the mod on or off. Off restores normal finishing speed. |
-| \`SpeedMultiplier\` | \`5\` | Set your preferred speed. \`1\` is normal, \`2\` is twice as fast, \`10\` is ten times as fast. Values from \`0.1\` to \`100\` are accepted. |
-| \`InstantFinish\` | \`false\` | Make the finishing step almost instant (0.05 seconds), regardless of the multiplier. |
-| \`DebugLogging\` | \`false\` | Write extra diagnostic details, useful when reporting a problem. |
+| `Enabled` | `true` | Turn the mod on or off. Off restores normal finishing speed. |
+| `SpeedMultiplier` | `5` | Set your preferred speed. `1` is normal, `2` is twice as fast, `10` is ten times as fast. Values from `0.1` to `100` are accepted. |
+| `InstantFinish` | `false` | Make the finishing step almost instant (0.05 seconds), regardless of the multiplier. |
+| `DebugLogging` | `false` | Write extra diagnostic details, useful when reporting a problem. |
 
 For example:
 
 | Multiplier | Finishing time before other game speed effects |
 | --- | --- |
-| \`0.5\` | 4 seconds |
-| \`1\` | 2 seconds (normal) |
-| \`2\` | 1 second |
-| **\`5\`** | **0.4 seconds (default)** |
-| \`10\` | 0.2 seconds |
-| \`InstantFinish = true\` | 0.05 seconds |
+| `0.5` | 4 seconds |
+| `1` | 2 seconds (normal) |
+| `2` | 1 second |
+| **`5`** | **0.4 seconds (default)** |
+| `10` | 0.2 seconds |
+| `InstantFinish = true` | 0.05 seconds |
 
 **Restart Stationeers after changing any setting.** Changes are applied when the game starts, not partway through a session.
 
 If you prefer editing a file, the settings are stored at:
 
-\`\`\`text
+```text
 <Stationeers game folder>\BepInEx\config\stationeers.fasterframefinishing.cfg
-\`\`\`
+```
 
 ## Multiplayer
 
@@ -113,11 +113,11 @@ Check that BepInEx and StationeersLaunchPad are installed, and that the mod is e
 
 **The finishing speed has not changed**
 
-Check that \`Enabled\` is \`true\`, that \`SpeedMultiplier\` is greater than \`1\` (or \`InstantFinish\` is enabled), and restart the game. Also check for another mod that changes frame construction.
+Check that `Enabled` is `true`, that `SpeedMultiplier` is greater than `1` (or `InstantFinish` is enabled), and restart the game. Also check for another mod that changes frame construction.
 
 **I want to check whether the mod loaded**
 
-Look in the game's \`BepInEx\LogOutput.log\` for a message mentioning **Faster Frame Finishing**. If you're reporting a problem, enable \`DebugLogging\`, restart and attach the relevant log.
+Look in the game's `BepInEx\LogOutput.log` for a message mentioning **Faster Frame Finishing**. If you're reporting a problem, enable `DebugLogging`, restart and attach the relevant log.
 
 Found an issue? [Report it on GitHub](https://github.com/macg4dave/faster_frame_finishing/issues).
 
@@ -127,11 +127,11 @@ If you installed through Steam Workshop, unsubscribe and restart the game. Alter
 
 For a manual installation, remove:
 
-\`\`\`text
+```text
 Documents\My Games\Stationeers\mods\FasterFrameFinishing\
-\`\`\`
+```
 
-You can also delete its settings file from \`BepInEx\config\` if you no longer want to keep your preferences. Your saved worlds do not depend on the mod.
+You can also delete its settings file from `BepInEx\config` if you no longer want to keep your preferences. Your saved worlds do not depend on the mod.
 
 ---
 
