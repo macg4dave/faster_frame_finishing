@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    The plugin compiles against the game's own Mono class libraries (mscorlib/netstandard from
+    rocketstation_Data\Managed), the same approach StationeersLaunchPad uses. No game binaries
+    are copied to the output or committed to the repository.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <AssemblyName>FasterFrameFinishing</AssemblyName>
+    <RootNamespace>FasterFrameFinishing</RootNamespace>
+    <Version>1.0.0</Version>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <!-- Unity ships assemblies with mismatched reference versions; harmless. -->
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+
+    <DebugType Condition="'$(Configuration)' == 'Debug'">embedded</DebugType>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <GameReference Include="mscorlib;netstandard;System;System.Core" SourceDir="$(StationeersManagedDirectory)" />
+    <GameReference Include="Assembly-CSharp;UnityEngine;UnityEngine.CoreModule;UniTask" SourceDir="$(StationeersManagedDirectory)" />
+    <GameReference Include="BepInEx" SourceDir="$(BepInExCoreDirectory)" />
+
+    <Reference Include="@(GameReference)" HintPath="%(SourceDir)%(Identity).dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ModAboutFile Include="About\**\*" />
+    <None Remove="About\**" />
+    <None Include="@(ModAboutFile)" />
+  </ItemGroup>
+
+  <Target Name="ValidateStationeersDirectory" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('%(GameReference.SourceDir)%(GameReference.Identity).dll')"
+           Text="Missing game/BepInEx assembly: %(GameReference.SourceDir)%(GameReference.Identity).dll. Set StationeersDirectory (see README 'Building') to a Stationeers install with BepInEx 5 installed. Current value: '$(StationeersDirectory)'." />
+  </Target>
+
+  <!-- Produces a ready-to-install mod folder: bin\<Config>\package\FasterFrameFinishing\ -->
+  <Target Name="StageModPackage" AfterTargets="Build">
+    <PropertyGroup>
+      <ModPackageDir>$(OutDir)package\FasterFrameFinishing\</ModPackageDir>
+    </PropertyGroup>
+    <RemoveDir Directories="$(ModPackageDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModPackageDir)" />
+    <Copy SourceFiles="@(ModAboutFile)" DestinationFolder="$(ModPackageDir)About\%(RecursiveDir)" />
+    <Message Importance="high" Text="Mod package staged at $(ModPackageDir)" />
+  </Target>
+
+  <!-- Opt-in: -p:DeployToGame=true copies the package into the local LaunchPad mods folder. -->
+  <Target Name="DeployModToGame" AfterTargets="StageModPackage" Condition="'$(DeployToGame)' == 'true'">
+    <PropertyGroup>
+      <ModDeployDir>$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\My Games\Stationeers\mods\FasterFrameFinishing\</ModDeployDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <_PackageFiles Include="$(ModPackageDir)**\*" />
+    </ItemGroup>
+    <RemoveDir Directories="$(ModDeployDir)" />
+    <Copy SourceFiles="@(_PackageFiles)" DestinationFolder="$(ModDeployDir)%(RecursiveDir)" />
+    <Message Importance="high" Text="Mod deployed to $(ModDeployDir)" />
+  </Target>
+</Project>

@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+TestResults/
+
+# Local machine configuration (game path)
+Stationeers.User.props
+
+# Never commit game or BepInEx binaries (copyrighted / redistributable only by their owners)
+*.dll
+*.pdb
+*.exe
+rocketstation_Data/
+BepInEx/
+
+# Python tooling
+.venv*/
+__pycache__/
+*.pyc
+
+# Extracted game data dumps (may contain game content)
+frames*.json
+structures*.json

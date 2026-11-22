@@ -1,0 +1,27 @@
+<Project>
+  <!--
+    Shared settings for every project in this repository.
+
+    StationeersDirectory resolution order (first match wins):
+      1. -p:StationeersDirectory=... on the command line
+      2. Stationeers.User.props next to this file (git-ignored; copy Stationeers.User.props.example)
+      3. STATIONEERS_DIR environment variable
+      4. Default Steam install location
+  -->
+  <Import Project="$(MSBuildThisFileDirectory)Stationeers.User.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)Stationeers.User.props')" />
+
+  <PropertyGroup>
+    <StationeersDirectory Condition="'$(StationeersDirectory)' == ''">$(STATIONEERS_DIR)</StationeersDirectory>
+    <StationeersDirectory Condition="'$(StationeersDirectory)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Stationeers</StationeersDirectory>
+    <!-- Separate property: a command-line StationeersDirectory is global and cannot be reassigned. -->
+    <StationeersRoot>$([MSBuild]::EnsureTrailingSlash('$(StationeersDirectory)'))</StationeersRoot>
+    <StationeersManagedDirectory>$(StationeersRoot)rocketstation_Data\Managed\</StationeersManagedDirectory>
+    <BepInExCoreDirectory>$(StationeersRoot)BepInEx\core\</BepInExCoreDirectory>
+
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+</Project>

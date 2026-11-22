@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Automated tests. The game-independent Core sources are compiled in directly, so these tests
+    run anywhere (including CI) without Stationeers or BepInEx binaries.
+
+    GameApiCompatibilityTests additionally inspect the locally installed game assemblies via
+    MetadataLoadContext (read-only, never executed). They are skipped when no install is found.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>FasterFrameFinishing.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\src\FasterFrameFinishing\Core\**\*.cs" Link="Core\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Optional: when a local BepInEx install exists, also test the real config binding. -->
+  <PropertyGroup Condition="Exists('$(BepInExCoreDirectory)BepInEx.dll')">
+    <DefineConstants>$(DefineConstants);HAS_BEPINEX</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="Exists('$(BepInExCoreDirectory)BepInEx.dll')">
+    <Compile Include="..\..\src\FasterFrameFinishing\Configuration\**\*.cs" Link="Configuration\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Reference Include="BepInEx" HintPath="$(BepInExCoreDirectory)BepInEx.dll" Private="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="10.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Passed to tests so they can find the game install; empty values just cause skips. -->
+    <RuntimeHostConfigurationOption Include="FasterFrameFinishing.Tests.StationeersDirectory" Value="$(StationeersRoot)" />
+    <RuntimeHostConfigurationOption Include="FasterFrameFinishing.Tests.PluginAssembly"
+                                    Value="$(MSBuildThisFileDirectory)..\..\src\FasterFrameFinishing\bin\$(Configuration)\FasterFrameFinishing.dll" />
+    <RuntimeHostConfigurationOption Include="FasterFrameFinishing.Tests.AboutXml"
+                                    Value="$(MSBuildThisFileDirectory)..\..\src\FasterFrameFinishing\About\About.xml" />
+  </ItemGroup>
+</Project>

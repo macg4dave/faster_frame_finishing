@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    Copy this file to Stationeers.User.props (git-ignored) and set the path to your
+    Stationeers installation, i.e. the folder that contains rocketstation.exe.
+  -->
+  <PropertyGroup>
+    <StationeersDirectory>F:\SteamLibrary\steamapps\common\Stationeers</StationeersDirectory>
+
+    <!-- Optional: copy the built mod into your local LaunchPad mods folder after each build. -->
+    <!-- <DeployToGame>true</DeployToGame> -->
+  </PropertyGroup>
+</Project>
