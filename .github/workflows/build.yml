@@ -43,4 +43,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: FasterFrameFinishing
-          path: src/FasterFrameFinishing/bin/Release/package/
+          path: artifacts/FasterFrameFinishing-*.zip

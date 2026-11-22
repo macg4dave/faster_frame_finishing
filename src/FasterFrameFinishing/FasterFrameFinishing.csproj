@@ -53,10 +53,45 @@
     <Message Importance="high" Text="Mod package staged at $(ModPackageDir)" />
   </Target>
 
-  <!-- Opt-in: -p:DeployToGame=true copies the package into the local LaunchPad mods folder. -->
+  <!--
+    Release builds also produce the download for players: artifacts\FasterFrameFinishing-<Version>.zip
+    The zip contains exactly one top-level folder, FasterFrameFinishing\ (DLL + About\), so unzipping
+    it into the mods folder gives mods\FasterFrameFinishing\... with no bin\Debug or bin\Release clutter.
+  -->
+  <Target Name="ZipModPackage" AfterTargets="StageModPackage" Condition="'$(Configuration)' == 'Release'">
+    <XmlPeek XmlInputPath="About\About.xml" Query="/ModMetadata/Version/text()">
+      <Output TaskParameter="Result" PropertyName="_AboutVersion" />
+    </XmlPeek>
+    <Error Condition="'$(_AboutVersion)' != '$(Version)'"
+           Text="Version mismatch: About\About.xml says '$(_AboutVersion)' but the project says '$(Version)'. Update both (and PluginInfo.Version)." />
+    <PropertyGroup>
+      <ModZipFile>$(MSBuildThisFileDirectory)..\..\artifacts\FasterFrameFinishing-$(Version).zip</ModZipFile>
+    </PropertyGroup>
+    <MakeDir Directories="$(MSBuildThisFileDirectory)..\..\artifacts" />
+    <ZipDirectory SourceDirectory="$(OutDir)package" DestinationFile="$(ModZipFile)" Overwrite="true" />
+    <Message Importance="high" Text="Release zip created at $([System.IO.Path]::GetFullPath('$(ModZipFile)'))" />
+  </Target>
+
+  <!--
+    Opt-in: -p:DeployToGame=true copies the package into the game's local mods folder.
+    The game reads local mods from <SavePath>\mods (WorkshopUtils.GetLocalDirInfo), where SavePath
+    comes from Documents\My Games\Stationeers\setting.xml (the game's Settings > save Path).
+    Override with -p:StationeersModsDirectory=... if needed.
+  -->
   <Target Name="DeployModToGame" AfterTargets="StageModPackage" Condition="'$(DeployToGame)' == 'true'">
     <PropertyGroup>
-      <ModDeployDir>$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\My Games\Stationeers\mods\FasterFrameFinishing\</ModDeployDir>
+      <_StationeersDefaultSaveDir>$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\My Games\Stationeers</_StationeersDefaultSaveDir>
+      <_StationeersSettingFile>$(_StationeersDefaultSaveDir)\setting.xml</_StationeersSettingFile>
+    </PropertyGroup>
+    <XmlPeek Condition="'$(StationeersModsDirectory)' == '' And Exists('$(_StationeersSettingFile)')"
+             XmlInputPath="$(_StationeersSettingFile)" Query="/SettingData/SavePath/text()">
+      <Output TaskParameter="Result" PropertyName="_StationeersSavePath" />
+    </XmlPeek>
+    <PropertyGroup>
+      <_StationeersSavePath Condition="'$(_StationeersSavePath)' == ''">$(_StationeersDefaultSaveDir)</_StationeersSavePath>
+      <_ModsDir Condition="'$(StationeersModsDirectory)' != ''">$(StationeersModsDirectory)</_ModsDir>
+      <_ModsDir Condition="'$(StationeersModsDirectory)' == ''">$(_StationeersSavePath)\mods</_ModsDir>
+      <ModDeployDir>$([MSBuild]::EnsureTrailingSlash('$(_ModsDir)'))FasterFrameFinishing\</ModDeployDir>
     </PropertyGroup>
     <ItemGroup>
       <_PackageFiles Include="$(ModPackageDir)**\*" />

@@ -8,5 +8,9 @@
 
     <!-- Optional: copy the built mod into your local LaunchPad mods folder after each build. -->
     <!-- <DeployToGame>true</DeployToGame> -->
+
+    <!-- Optional: where DeployToGame copies the mod. By default it is read from <SavePath> in
+         Documents\My Games\Stationeers\setting.xml (+ \mods), the same folder the game reads. -->
+    <!-- <StationeersModsDirectory>D:\Stationeers\mods</StationeersModsDirectory> -->
   </PropertyGroup>
 </Project>

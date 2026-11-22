@@ -18,20 +18,51 @@ The mod uses **StationeersLaunchPad**. You will need **BepInEx 5.4** and **Stati
 
 ### Manual installation
 
-If you have a packaged copy of the mod, put the entire `FasterFrameFinishing` folder into:
+1. Install [BepInEx 5](https://github.com/BepInEx/BepInEx/releases) and [StationeersLaunchPad](https://github.com/StationeersLaunchPad/StationeersLaunchPad#installation) as described above.
+2. Download **`FasterFrameFinishing-1.0.0.zip`** from the [Releases page](https://github.com/macg4dave/faster_frame_finishing/releases).
+   Download the zip file, not the green **Code** button. That button gives you the source code, which the game can't use.
+3. Unzip it into your Stationeers `mods` folder (see below).
+4. Start Stationeers. On the loading screen, click the **LaunchPad** box and make sure **Faster Frame Finishing** is listed and ticked.
+
+#### Windows
+
+The default `mods` folder is:
 
 ```text
-Documents\My Games\Stationeers\mods\
+%USERPROFILE%\Documents\My Games\Stationeers\mods
 ```
 
-The resulting layout should look like this:
+Paste that line into the address bar of File Explorer and press **Enter** to open it. Then open the zip file and drag the **`FasterFrameFinishing`** folder from inside it into the `mods` folder.
+
+> Avoid **Extract All…** with its default settings. Windows adds an extra folder named after the zip, which gives you `mods\FasterFrameFinishing-1.0.0\FasterFrameFinishing\`.
+
+#### Linux / Steam Deck (Proton)
+
+Stationeers runs through Proton, so the `mods` folder is inside the game's Proton prefix:
+
+```text
+~/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My Games/Stationeers/mods
+```
+
+Unzip from a terminal:
+
+```bash
+unzip FasterFrameFinishing-1.0.0.zip -d ~/.local/share/Steam/steamapps/compatdata/544550/pfx/drive_c/users/steamuser/Documents/My\ Games/Stationeers/mods/
+```
+
+If Stationeers is installed in a different Steam library, replace `~/.local/share/Steam` with that library's folder.
+
+#### Check the result
+
+If a `mods` folder doesn't exist yet, start the game once and it will be created, or create it yourself. When everything is in place, it should look like this:
 
 ```text
 mods/
 └── FasterFrameFinishing/
     ├── FasterFrameFinishing.dll
     └── About/
-        └── About.xml
+        ├── About.xml
+        └── Preview.png
 ```
 
 
@@ -70,7 +101,7 @@ The mod has passed automated checks against **Stationeers 0.2.6429.27802**, Feed
 
 **The mod is not showing up**
 
-Check that BepInEx and StationeersLaunchPad are installed, and that the mod is enabled in the LaunchPad window. If you installed it manually, confirm the folder structure above.
+Check that BepInEx and StationeersLaunchPad are installed, and that the mod is enabled in the LaunchPad window. If you installed it manually, compare your `mods` folder with the layout under [Check the result](#check-the-result). The most common mistake is an extra folder level, such as `mods\FasterFrameFinishing-1.0.0\FasterFrameFinishing\`.
 
 **The finishing speed has not changed**
 
@@ -86,11 +117,7 @@ Found an issue? [Report it on GitHub](https://github.com/macg4dave/faster_frame_
 
 If you installed through Steam Workshop, unsubscribe and restart the game. Alternatively, untick the mod in LaunchPad to disable it.
 
-For a manual installation, remove:
-
-```text
-Documents\My Games\Stationeers\mods\FasterFrameFinishing\
-```
+For a manual installation, delete the `FasterFrameFinishing` folder from the `mods` folder you installed it into (see [Manual installation](#manual-installation)).
 
 You can also delete its settings file from `BepInEx\config` if you no longer want to keep your preferences. Your saved worlds do not depend on the mod.
 
